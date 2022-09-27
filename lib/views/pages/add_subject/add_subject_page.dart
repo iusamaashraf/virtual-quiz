@@ -57,10 +57,17 @@ class AddSubjectPage extends StatelessWidget with ValidationMixin {
                 text: 'Add Subject',
                 onTap: () {
                   if (_key.currentState!.validate()) {
-                    addSubjectctrl.addSubject(
-                      subjectController.text,
-                      context,
-                    );
+                    addSubjectctrl.doesSubjectExists(subjectController.text)
+                        ? Get.snackbar(
+                            "Already exist", "This subject is already exists")
+                        : addSubjectctrl.addSubject(
+                            subjectController.text,
+                            context,
+                          );
+
+                    // addSubjectctrl.doesNameAlreadyExist(
+                    //   subjectController.text,
+                    // );
                   }
                 },
               ),
