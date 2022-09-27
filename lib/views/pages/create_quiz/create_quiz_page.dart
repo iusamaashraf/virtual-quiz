@@ -116,7 +116,9 @@ class _CreateQuizPageState extends State<CreateQuizPage> with ValidationMixin {
                                     optionBController.text,
                                     optionCController.text,
                                     optionDController.text,
-                                    correctOptionController.text);
+                                    correctOptionController.text,
+                                    false,
+                                  );
                           }
                           // Get.back();
                           questionController.clear();

@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:quiz_app/models/questions_model.dart';
 import 'package:quiz_app/models/subject_model.dart';
-import 'package:quiz_app/utils/loading_dialog.dart';
 
 class AddSubjectController extends GetxController {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -101,6 +100,7 @@ class AddSubjectController extends GetxController {
     String optionC,
     String optionD,
     String correctOption,
+    bool isSelect,
   ) async {
     await firestore
         .collection("Users")
@@ -116,7 +116,19 @@ class AddSubjectController extends GetxController {
       'optionC': optionC,
       'optionD': optionD,
       'correctOption': correctOption,
+      'isSelect': isSelect,
     });
+  }
+
+  void updateQuestion(String subjectId, bool updateCheckbox, String docId) {
+    firestore
+        .collection("Users")
+        .doc(auth.currentUser!.uid)
+        .collection("Subjects")
+        .doc(subjectId)
+        .collection("Questions")
+        .doc(docId)
+        .update({'isSelect': updateCheckbox});
   }
 
   //<<<<======================== Questions exist or not =================================>>>>

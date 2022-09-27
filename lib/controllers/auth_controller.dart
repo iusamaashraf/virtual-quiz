@@ -10,7 +10,9 @@ import 'package:quiz_app/views/pages/home/home_page.dart';
 class AuthenticationController extends GetxController {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+
   File? customerImage;
+
   // <<<<============================ create account ==================================>>>>>
 
   void signUp(

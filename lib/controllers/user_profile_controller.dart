@@ -11,6 +11,7 @@ class UserProfileController extends GetxController {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   Rxn<UserProfileModel> userModel = Rxn<UserProfileModel>();
+  UserProfileModel? get user => userModel.value;
   File? profileImage;
   @override
   void onInit() {

@@ -8,6 +8,7 @@ class QuestionModel {
   String? optionC;
   String? optionD;
   String? correctOption;
+  bool? isSelect;
   QuestionModel({
     required this.id,
     required this.question,
@@ -16,6 +17,7 @@ class QuestionModel {
     required this.optionC,
     required this.optionD,
     required this.correctOption,
+    required this.isSelect,
   });
   QuestionModel.fromSnapshot(DocumentSnapshot data) {
     id = data.id;
@@ -25,5 +27,6 @@ class QuestionModel {
     optionC = data['optionC'] ?? '';
     optionD = data['optionD'] ?? '';
     correctOption = data['correctOption'] ?? '';
+    isSelect = data['isSelect'] ?? false;
   }
 }

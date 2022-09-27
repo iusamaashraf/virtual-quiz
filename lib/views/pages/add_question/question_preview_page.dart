@@ -3,10 +3,9 @@ import 'package:get/get.dart';
 import 'package:quiz_app/constants/colors.dart';
 import 'package:quiz_app/constants/mixin_validator.dart';
 import 'package:quiz_app/controllers/add_subject_controller.dart';
-import 'package:quiz_app/utils/loading_dialog.dart';
-import 'package:quiz_app/views/pages/add_question/components/question_input_field.dart';
+import 'package:quiz_app/controllers/preview_controller.dart';
 import 'package:quiz_app/views/pages/create_quiz/create_quiz_page.dart';
-import 'package:quiz_app/views/widgets/imput_field.dart';
+import 'package:quiz_app/views/pages/preview_question/preview_question_page.dart';
 import 'package:quiz_app/views/widgets/primary_appbar.dart';
 import 'package:quiz_app/views/widgets/primary_button.dart';
 
@@ -25,7 +24,7 @@ class _QuestionPreviewPageState extends State<QuestionPreviewPage>
     with ValidationMixin {
   final AddSubjectController subjectController =
       Get.put(AddSubjectController());
-
+  final PreviewController previewController = Get.put(PreviewController());
   @override
   void initState() {
     subjectController.getQuestionList(widget.id);
@@ -71,6 +70,47 @@ class _QuestionPreviewPageState extends State<QuestionPreviewPage>
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            Align(
+                                              alignment: Alignment.topRight,
+                                              child: Checkbox(
+                                                  value: subjectController
+                                                      .question![index]
+                                                      .isSelect,
+                                                  onChanged: (onChanged) {
+                                                    setState(() {
+                                                      subjectController
+                                                              .question![index]
+                                                              .isSelect =
+                                                          !subjectController
+                                                              .question![index]
+                                                              .isSelect!;
+
+                                                      subjectController
+                                                          .updateQuestion(
+                                                              widget.id,
+                                                              subjectController
+                                                                  .question![
+                                                                      index]
+                                                                  .isSelect!,
+                                                              subjectController
+                                                                  .question![
+                                                                      index]
+                                                                  .id!);
+
+                                                      subjectController
+                                                              .question![index]
+                                                              .isSelect!
+                                                          ? previewController
+                                                              .questionList
+                                                              .add(subjectController
+                                                                      .question![
+                                                                  index])
+                                                          : SizedBox();
+                                                      print(
+                                                          'Sorted Questionlist is${previewController.questionList.length}');
+                                                    });
+                                                  }),
+                                            ),
                                             Text(
                                                 "Question: " +
                                                     subjectController
@@ -152,7 +192,9 @@ class _QuestionPreviewPageState extends State<QuestionPreviewPage>
                         ? PrimaryButton(
                             size: size,
                             text: 'Preview Quiz',
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(() => PreviewQuestionPage());
+                            },
                           )
                         : const SizedBox(),
                     const SizedBox(
