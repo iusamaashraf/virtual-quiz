@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:quiz_app/constants/colors.dart';
 import 'package:quiz_app/controllers/auth_controller.dart';
 import 'package:quiz_app/controllers/user_profile_controller.dart';
-import 'package:quiz_app/utils/loading_dialog.dart';
 import 'package:quiz_app/views/widgets/primary_appbar.dart';
 import 'package:quiz_app/views/widgets/primary_button.dart';
 

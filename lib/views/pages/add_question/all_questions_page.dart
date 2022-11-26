@@ -4,23 +4,23 @@ import 'package:quiz_app/constants/colors.dart';
 import 'package:quiz_app/constants/mixin_validator.dart';
 import 'package:quiz_app/controllers/add_subject_controller.dart';
 import 'package:quiz_app/controllers/preview_controller.dart';
+import 'package:quiz_app/models/questions_model.dart';
 import 'package:quiz_app/views/pages/create_quiz/create_quiz_page.dart';
-import 'package:quiz_app/views/pages/preview_question/preview_question_page.dart';
 import 'package:quiz_app/views/widgets/primary_appbar.dart';
 import 'package:quiz_app/views/widgets/primary_button.dart';
 
-class QuestionPreviewPage extends StatefulWidget {
-  const QuestionPreviewPage({
+class AllQuestionsPage extends StatefulWidget {
+  const AllQuestionsPage({
     Key? key,
     required this.id,
   }) : super(key: key);
   final String id;
 
   @override
-  State<QuestionPreviewPage> createState() => _QuestionPreviewPageState();
+  State<AllQuestionsPage> createState() => _AllQuestionsPageState();
 }
 
-class _QuestionPreviewPageState extends State<QuestionPreviewPage>
+class _AllQuestionsPageState extends State<AllQuestionsPage>
     with ValidationMixin {
   final AddSubjectController subjectController =
       Get.put(AddSubjectController());
@@ -87,27 +87,103 @@ class _QuestionPreviewPageState extends State<QuestionPreviewPage>
 
                                                       subjectController
                                                           .updateQuestion(
-                                                              widget.id,
-                                                              subjectController
-                                                                  .question![
-                                                                      index]
-                                                                  .isSelect!,
-                                                              subjectController
-                                                                  .question![
-                                                                      index]
-                                                                  .id!);
-
-                                                      subjectController
+                                                        widget.id,
+                                                        subjectController
+                                                            .question![index]
+                                                            .isSelect!,
+                                                        subjectController
+                                                            .question![index]
+                                                            .id!,
+                                                      );
+                                                      // here we add selected quiz in list which is quiz model type
+                                                      if (subjectController
                                                               .question![index]
-                                                              .isSelect!
-                                                          ? previewController
-                                                              .questionList
-                                                              .add(subjectController
-                                                                      .question![
-                                                                  index])
-                                                          : SizedBox();
+                                                              .isSelect! ==
+                                                          true) {
+                                                        previewController.preview?.add(QuestionModel(
+                                                            id: subjectController
+                                                                .question![
+                                                                    index]
+                                                                .id,
+                                                            question:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .question,
+                                                            optionA:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .optionA,
+                                                            optionB:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .optionB,
+                                                            optionC:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .optionC,
+                                                            optionD:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .optionD,
+                                                            correctOption:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .correctOption,
+                                                            isSelect:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .isSelect));
+                                                      } else {
+                                                        previewController.preview?.remove(QuestionModel(
+                                                            id: subjectController
+                                                                .question![
+                                                                    index]
+                                                                .id,
+                                                            question:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .question,
+                                                            optionA:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .optionA,
+                                                            optionB:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .optionB,
+                                                            optionC:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .optionC,
+                                                            optionD:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .optionD,
+                                                            correctOption:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .correctOption,
+                                                            isSelect:
+                                                                subjectController
+                                                                    .question![
+                                                                        index]
+                                                                    .isSelect));
+                                                      }
                                                       print(
-                                                          'Sorted Questionlist is${previewController.questionList.length}');
+                                                          "length is: ${previewController.preview!.length.toString()}");
                                                     });
                                                   }),
                                             ),
@@ -193,7 +269,7 @@ class _QuestionPreviewPageState extends State<QuestionPreviewPage>
                             size: size,
                             text: 'Preview Quiz',
                             onTap: () {
-                              Get.to(() => PreviewQuestionPage());
+                              // Get.to(() => PreviewQuestionPage());
                             },
                           )
                         : const SizedBox(),
